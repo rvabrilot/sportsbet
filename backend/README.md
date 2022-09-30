@@ -6,8 +6,8 @@ This backend uses the [Connexion](https://github.com/zalando/connexion) library 
 ## Requirements
 Python 3.5.2+
 
-## Usage
-To run the server, please execute the following from the root directory:
+## How to develop
+To run the development server, please execute the following from the root directory (you may want to use a virtual environment for this):
 
 ```
 pip3 install -r requirements.txt
@@ -20,10 +20,10 @@ and open your browser to here:
 http://localhost:8080/api/v3/ui/
 ```
 
-Your Swagger definition lives here:
+The Open API V3 definition lives here:
 
 ```
-http://localhost:8080/api/v3/swagger.json
+http://localhost:8080/api/v3/openapi.json
 ```
 
 To launch the integration tests, use tox:
@@ -34,7 +34,7 @@ tox
 
 ## Running with Docker
 
-To run the server on a Docker container, please execute the following from the root directory:
+To run the development server on a Docker container, please execute the following from the backend directory:
 
 ```bash
 # building the image

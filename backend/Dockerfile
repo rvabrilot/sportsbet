@@ -13,4 +13,4 @@ EXPOSE 8080
 
 ENTRYPOINT ["python3"]
 
-CMD ["-m", "server"]
+CMD ["-m", "sportsbet_server"]
