@@ -1,0 +1,582 @@
+openapi: 3.0.3
+info:
+  title: SportsBet Backend 0.1.1
+  description: Esta API es del backend de SportsBet
+  contact:
+    email: rvabrilot@gmail.com
+  license:
+    name: GNU Lesser 2.1
+    url: https://github.com/rvabrilot/sportsbet/blob/main/LICENSE
+  version: 0.1.1
+externalDocs:
+  description: README
+  url: https://github.com/rvabrilot/sportsbet/blob/main/README.md
+servers:
+- url: http://localhost:8080/api/v3
+tags:
+- name: bet
+  description: Everything about the Bets
+  externalDocs:
+    description: What is a bet?
+    url: https://www.merriam-webster.com/dictionary/bet
+- name: event
+  description: Events that user can bet on
+  externalDocs:
+    description: What is an event?
+    url: https://www.merriam-webster.com/dictionary/event
+- name: user
+  description: Operations about user
+paths:
+  /bet:
+    post:
+      tags:
+      - bet
+      summary: Add a new bet
+      description: Add a new bet
+      operationId: add_bet
+      parameters:
+      - name: api_key
+        in: header
+        description: ""
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: userId
+        in: query
+        description: ID of user who made the bet
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: eventIds
+        in: query
+        description: Comma separated list of eventIds that this bet is on
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: amount
+        in: query
+        description: amount of credits for this bet to be taken from the user
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bet'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Bet'
+        "405":
+          description: Invalid input
+      x-openapi-router-controller: sportsbet_server.controllers.bet_controller
+  /bet/{betId}:
+    get:
+      tags:
+      - bet
+      summary: Find bet by ID
+      description: Returns a single bet
+      operationId: get_bet_by_id
+      parameters:
+      - name: api_key
+        in: header
+        description: ""
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: betId
+        in: path
+        description: ID of bet to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bet'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Bet'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Bet not found
+      x-openapi-router-controller: sportsbet_server.controllers.bet_controller
+    delete:
+      tags:
+      - bet
+      summary: Deletes a bet
+      description: delete a bet
+      operationId: delete_bet
+      parameters:
+      - name: api_key
+        in: header
+        description: ""
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: betId
+        in: path
+        description: Bet id to delete
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "400":
+          description: Invalid bet value
+      x-openapi-router-controller: sportsbet_server.controllers.bet_controller
+  /event:
+    get:
+      tags:
+      - event
+      summary: Returns events available to bet on
+      description: list of events
+      operationId: get_events
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+                x-content-type: application/json
+      security:
+      - api_key: []
+      x-openapi-router-controller: sportsbet_server.controllers.event_controller
+  /user:
+    post:
+      tags:
+      - user
+      summary: Create user
+      description: This can only be done by the logged in user.
+      operationId: create_user
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+      x-openapi-router-controller: sportsbet_server.controllers.user_controller
+  /user/createWithList:
+    post:
+      tags:
+      - user
+      summary: Creates list of users with given input array
+      description: Creates list of users with given input array
+      operationId: create_users_with_list_input
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          description: successful operation
+      x-openapi-router-controller: sportsbet_server.controllers.user_controller
+  /user/login:
+    get:
+      tags:
+      - user
+      summary: Logs user into the system
+      description: ""
+      operationId: login_user
+      parameters:
+      - name: username
+        in: query
+        description: The user name for login
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: password
+        in: query
+        description: The password for login in clear text
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              style: simple
+              explode: false
+              schema:
+                type: integer
+                format: int32
+            X-Expires-After:
+              description: date in UTC when token expires
+              style: simple
+              explode: false
+              schema:
+                type: string
+                format: date-time
+          content:
+            application/xml:
+              schema:
+                type: string
+                x-content-type: application/xml
+            application/json:
+              schema:
+                type: string
+        "400":
+          description: Invalid username/password supplied
+      x-openapi-router-controller: sportsbet_server.controllers.user_controller
+  /user/logout:
+    get:
+      tags:
+      - user
+      summary: Logs out current logged in user session
+      description: ""
+      operationId: logout_user
+      parameters: []
+      responses:
+        default:
+          description: successful operation
+      x-openapi-router-controller: sportsbet_server.controllers.user_controller
+  /user/{username}:
+    get:
+      tags:
+      - user
+      summary: Get user by user name
+      description: ""
+      operationId: get_user_by_name
+      parameters:
+      - name: username
+        in: path
+        description: 'The name that needs to be fetched. Use user1 for testing. '
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Invalid username supplied
+        "404":
+          description: User not found
+      x-openapi-router-controller: sportsbet_server.controllers.user_controller
+    put:
+      tags:
+      - user
+      summary: Update user
+      description: This can only be done by the logged in user.
+      operationId: update_user
+      parameters:
+      - name: username
+        in: path
+        description: name that need to be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Update an existent user in the event
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        default:
+          description: successful operation
+      x-openapi-router-controller: sportsbet_server.controllers.user_controller
+    delete:
+      tags:
+      - user
+      summary: Delete user
+      description: This can only be done by the logged in user.
+      operationId: delete_user
+      parameters:
+      - name: username
+        in: path
+        description: The name that needs to be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "400":
+          description: Invalid username supplied
+        "404":
+          description: User not found
+      x-openapi-router-controller: sportsbet_server.controllers.user_controller
+components:
+  schemas:
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 07cb3c2c-b40c-472f-b05c-7168ac4327e0
+        event_start:
+          type: string
+          example: 2020-08-01 08:50
+        event_end:
+          type: string
+          example: 2020-08-01 08:50
+        local_player:
+          type: string
+          example: U. de Chile
+        visitor_player:
+          type: string
+          example: U. de Chile
+        category:
+          type: string
+          example: Futbol de Chile - Primera Division
+        rlf:
+          type: number
+          example: 1.2
+        rfv:
+          type: number
+          example: 1.2
+        rfe:
+          type: number
+          example: 1.2
+        ptl:
+          type: number
+          example: 1.2
+        ptv:
+          type: number
+          example: 1.2
+        pte:
+          type: number
+          example: 1.2
+        gv0:
+          type: number
+          example: 1.2
+        gv1:
+          type: number
+          example: 1.2
+        gv2:
+          type: number
+          example: 1.2
+        gv3:
+          type: number
+          example: 1.2
+      example:
+        pte: 1.2
+        gv0: 1.2
+        gv2: 1.2
+        rfv: 1.2
+        gv1: 1.2
+        gv3: 1.2
+        local_player: U. de Chile
+        visitor_player: U. de Chile
+        ptl: 1.2
+        rlf: 1.2
+        rfe: 1.2
+        event_start: 2020-08-01 08:50
+        event_end: 2020-08-01 08:50
+        ptv: 1.2
+        id: 07cb3c2c-b40c-472f-b05c-7168ac4327e0
+        category: Futbol de Chile - Primera Division
+      xml:
+        name: event
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: int64
+          example: "10"
+        nickname:
+          type: string
+          example: theUser
+        email:
+          type: string
+          example: john@email.com
+        md5:
+          type: string
+          example: "12345"
+        credit:
+          type: number
+          example: 12345
+      example:
+        nickname: theUser
+        id: "10"
+        credit: 12345
+        email: john@email.com
+        md5: "12345"
+      xml:
+        name: user
+    Bet:
+      required:
+      - bet_amount
+      - user_id
+      type: object
+      properties:
+        id:
+          type: string
+          example: e9f01bd4-4010-11ed-b878-0242ac120002
+        user_id:
+          type: string
+          example: e9f01bd4-4010-11ed-b878-0242ac120002
+        bet_datetime:
+          type: string
+          example: 2022-08-01 23:59
+        bet_amount:
+          type: number
+          example: 1000
+        events:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/Event'
+        status:
+          type: string
+          description: bet status
+          enum:
+          - placed
+          - win
+          - lose
+      example:
+        user_id: e9f01bd4-4010-11ed-b878-0242ac120002
+        bet_amount: 1000
+        id: e9f01bd4-4010-11ed-b878-0242ac120002
+        bet_datetime: 2022-08-01 23:59
+        events:
+        - pte: 1.2
+          gv0: 1.2
+          gv2: 1.2
+          rfv: 1.2
+          gv1: 1.2
+          gv3: 1.2
+          local_player: U. de Chile
+          visitor_player: U. de Chile
+          ptl: 1.2
+          rlf: 1.2
+          rfe: 1.2
+          event_start: 2020-08-01 08:50
+          event_end: 2020-08-01 08:50
+          ptv: 1.2
+          id: 07cb3c2c-b40c-472f-b05c-7168ac4327e0
+          category: Futbol de Chile - Primera Division
+        - pte: 1.2
+          gv0: 1.2
+          gv2: 1.2
+          rfv: 1.2
+          gv1: 1.2
+          gv3: 1.2
+          local_player: U. de Chile
+          visitor_player: U. de Chile
+          ptl: 1.2
+          rlf: 1.2
+          rfe: 1.2
+          event_start: 2020-08-01 08:50
+          event_end: 2020-08-01 08:50
+          ptv: 1.2
+          id: 07cb3c2c-b40c-472f-b05c-7168ac4327e0
+          category: Futbol de Chile - Primera Division
+        status: placed
+      xml:
+        name: bet
+  requestBodies:
+    Bet:
+      description: Bet object that needs to be added
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Bet'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Bet'
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+  securitySchemes:
+    bet_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://localhost:8080/oauth/authorize
+          scopes:
+            write:bets: modify bets in your account
+            read:bets: read your bets
+      x-tokenInfoFunc: sportsbet_server.controllers.authorization_controller.check_bet_auth
+      x-scopeValidateFunc: sportsbet_server.controllers.authorization_controller.validate_scope_bet_auth
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
+      x-apikeyInfoFunc: sportsbet_server.controllers.authorization_controller.check_api_key
+
