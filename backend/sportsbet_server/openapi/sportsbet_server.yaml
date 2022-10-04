@@ -474,6 +474,7 @@ components:
         credit: 12345
         email: john@email.com
         md5: "12345"
+        role: "jugador"
       xml:
         name: user
     Bet:

@@ -14,7 +14,7 @@ class User(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, nickname: str=None, email: str=None, md5: str=None, credit: float=None):  # noqa: E501
+    def __init__(self, id: str=None, nickname: str=None, email: str=None, md5: str=None, credit: float=None, role: str=None):  # noqa: E501
         """User - a model defined in Swagger
 
         :param id: The id of this User.  # noqa: E501
@@ -27,13 +27,16 @@ class User(Model):
         :type md5: str
         :param credit: The credit of this User.  # noqa: E501
         :type credit: float
+        :param role: The role of this User   # noqa: E501
+        :type role: str
         """
         self.swagger_types = {
             'id': str,
             'nickname': str,
             'email': str,
             'md5': str,
-            'credit': float
+            'credit': float,
+            'role': str
         }
 
         self.attribute_map = {
@@ -41,13 +44,15 @@ class User(Model):
             'nickname': 'nickname',
             'email': 'email',
             'md5': 'md5',
-            'credit': 'credit'
+            'credit': 'credit',
+            'role': 'role'
         }
         self._id = id
         self._nickname = nickname
         self._email = email
         self._md5 = md5
         self._credit = credit
+        self._role = role
 
     @classmethod
     def from_dict(cls, dikt) -> 'User':
@@ -164,3 +169,11 @@ class User(Model):
         """
 
         self._credit = credit
+    
+    @property
+    def role(self) -> str:
+        return self._role
+    
+    @role.setter
+    def role(self, role: str):
+        self._role = role
