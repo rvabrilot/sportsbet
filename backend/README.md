@@ -31,6 +31,14 @@ To launch the integration tests, use tox:
 sudo pip install tox
 tox
 ```
+### In case  of "importerror: cannot import name soft_unicode from markupsafe"
+
+try fixing running:
+```
+pip install --user --upgrade aws-sam-cli
+```
+or check this out:
+https://www.datasciencelearner.com/importerror-cannot-import-name-soft-unicode-from-markupsafe-solved/
 
 ## Running with Docker
 

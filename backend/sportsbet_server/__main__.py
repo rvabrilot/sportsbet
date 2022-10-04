@@ -8,7 +8,10 @@ import connexion
 def main():
     app = connexion.App(__name__, specification_dir='./openapi/')
     #app.app.json = encoder.JSONEncoder
-    app.add_api('sportsbet_server.yaml', arguments={'title': 'SportsBet Backend 0.1.1'}, pythonic_params=True)
+    app.add_api('sportsbet_server.yaml',
+     arguments={'title': 'SportsBet Backend 0.1.1'}, 
+     pythonic_params=True,
+     options = {"swagger_ui": True})
     app.run(port=8080)
 
 

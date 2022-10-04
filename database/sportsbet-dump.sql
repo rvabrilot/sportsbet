@@ -180,6 +180,7 @@ CREATE TABLE `user` (
   `nickname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'apodo que el usuario elige',
   `credit` decimal(10,10) NOT NULL DEFAULT '0.0000000000' COMMENT 'credito del usuario para jugar',
   `md5` varchar(100) NOT NULL COMMENT 'password md5',
+  `role` varchar(10) NOT NULL DEFAULT 'jugador' COMMENT 'indica el rol del usuario entre: jugador o admin',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='usuarios del sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -202,4 +203,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-30  9:38:24
+-- Dump completed on 2022-10-04 11:38:33

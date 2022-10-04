@@ -166,8 +166,8 @@ paths:
                   type: integer
                   format: int32
                 x-content-type: application/json
-      security:
-      - api_key: []
+#      security:
+#      - api_key: []
       x-openapi-router-controller: sportsbet_server.controllers.event_controller
   /user:
     post:
@@ -465,6 +465,9 @@ components:
         credit:
           type: number
           example: 12345
+        role:
+          type: string
+          example: "jugador"
       example:
         nickname: theUser
         id: "10"
