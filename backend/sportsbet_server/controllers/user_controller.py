@@ -69,7 +69,7 @@ def delete_user(username):  # noqa: E501
     return 'do some magic!'
 
 
-def get_user_by_name(username):  # noqa: E501
+def get_user_by_id(user_id):  # noqa: E501
     """Get user by user name
 
      # noqa: E501
