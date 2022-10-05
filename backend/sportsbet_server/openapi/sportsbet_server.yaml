@@ -24,6 +24,8 @@ tags:
   description: Una categoria de evento ejemplo primera division
 - name: event_player
   description: Nombre de un equipo o jugador en un evento ejemplo U. de Chile
+- name: ranking
+  description: El Ranking de los usuarios
 paths:
   /bet:
     post:
@@ -773,6 +775,27 @@ paths:
         "404":
           description: User not found
       x-openapi-router-controller: sportsbet_server.controllers.user_controller
+  /ranking:
+    get:
+      tags:
+      - ranking
+      summary: Returns the ranking
+      description: the ranking
+      operationId: get_ranking
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+                x-content-type: application/json
+#      security:
+#      - api_key: []
+      x-openapi-router-controller: sportsbet_server.controllers.ranking_controller
 components:
   schemas:
     EventPlayer:
