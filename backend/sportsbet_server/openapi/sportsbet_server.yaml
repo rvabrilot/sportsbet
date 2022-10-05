@@ -15,17 +15,15 @@ servers:
 - url: http://localhost:8080/api/v3
 tags:
 - name: bet
-  description: Everything about the Bets
-  externalDocs:
-    description: What is a bet?
-    url: https://www.merriam-webster.com/dictionary/bet
+  description: Una apuesta
 - name: event
-  description: Events that user can bet on
-  externalDocs:
-    description: What is an event?
-    url: https://www.merriam-webster.com/dictionary/event
+  description: Un evento sobre el cual se pueden hacer apuestas
 - name: user
-  description: Operations about user
+  description: un usuario del sistema
+- name: event_category
+  description: Una categoria de evento ejemplo primera division
+- name: event_player
+  description: Nombre de un equipo o jugador en un evento ejemplo U. de Chile
 paths:
   /bet:
     post:
@@ -442,7 +440,7 @@ paths:
   /user:
     get:
       tags:
-      - event
+      - user
       summary: Returns all users
       description: list of users
       operationId: get_users
