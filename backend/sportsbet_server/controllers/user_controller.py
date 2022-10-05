@@ -1,10 +1,12 @@
 import connexion
 import six
 
-from sportsbet_server.models.user import User  # noqa: E501
+from sportsbet_server.models import User  # noqa: E501
 from sportsbet_server import util
 
-
+def get_users(body=None):
+    return 'To-DO'
+    
 def create_user(body=None):  # noqa: E501
     """Create user
 

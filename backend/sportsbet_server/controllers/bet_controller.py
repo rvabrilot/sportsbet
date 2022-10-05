@@ -1,7 +1,7 @@
 import connexion
 import six
 
-from sportsbet_server.models.bet import Bet  # noqa: E501
+from sportsbet_server.models import Bet  # noqa: E501
 from sportsbet_server import util
 
 
