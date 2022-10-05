@@ -147,6 +147,26 @@ paths:
           description: Invalid bet value
       x-openapi-router-controller: sportsbet_server.controllers.bet_controller
   /event_player:
+    get:
+      tags:
+      - event_player
+      summary: list all event player
+      description: List all event players
+      operationId: get_event_players
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+                x-content-type: application/json
+#      security:
+#      - api_key: []
+      x-openapi-router-controller: sportsbet_server.controllers.event_player_controller
     post:
       tags:
       - event_player
@@ -282,6 +302,26 @@ paths:
           description: successful operation
       x-openapi-router-controller: sportsbet_server.controllers.event_player_controller
   /event_category:
+    get:
+      tags:
+      - event_category
+      summary: list all event categories
+      description: List all event categories
+      operationId: get_event_categories
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+                x-content-type: application/json
+#      security:
+#      - api_key: []
+      x-openapi-router-controller: sportsbet_server.controllers.event_category_controller
     post:
       tags:
       - event_category
@@ -437,6 +477,77 @@ paths:
 #      security:
 #      - api_key: []
       x-openapi-router-controller: sportsbet_server.controllers.event_controller
+    post:
+      tags:
+      - event
+      summary: Add a new event  
+      description: Add a new event  
+      operationId: add_event
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Event'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Event'
+        "405":
+          description: Invalid input
+      x-openapi-router-controller: sportsbet_server.controllers.event_controller
+  /event/{Id}:
+    get:
+      tags:
+      - event
+      summary: Find event by ID
+      description: Returns a single event
+      operationId: get_event_by_id
+      parameters:
+      - name: api_key
+        in: header
+        description: ""
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: Id
+        in: path
+        description: ID of event to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Event'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Event not found
+      x-openapi-router-controller: sportsbet_server.controllers.event_controller
+    
   /user:
     get:
       tags:

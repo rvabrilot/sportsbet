@@ -4,6 +4,12 @@ import six
 from sportsbet_server import util, config
 from sportsbet_server.models import (Event)
 
+def add_event():
+    return {}
+
+def get_event_by_id():
+    return {}
+
 def get_events():  # noqa: E501
     """Returns events available to bet on
 

@@ -4,6 +4,9 @@ import six
 from sportsbet_server import util, config
 from sportsbet_server.models import (Event)
 
+
+def get_event_players():
+    return {}
 def add_event_player():
     return {}
 def get_event_player_by_id(Id):
