@@ -291,17 +291,17 @@ paths:
         default:
           description: successful operation
       x-openapi-router-controller: sportsbet_server.controllers.user_controller
-  /user/{username}:
+  /user/{id}:
     get:
       tags:
       - user
-      summary: Get user by user name
+      summary: Get user by id
       description: ""
-      operationId: get_user_by_name
+      operationId: get_user_by_id
       parameters:
-      - name: username
+      - name: id
         in: path
-        description: 'The name that needs to be fetched. Use user1 for testing. '
+        description: 'The id of the user that needs to be fetched.'
         required: true
         style: simple
         explode: false
@@ -318,7 +318,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
         "400":
-          description: Invalid username supplied
+          description: Invalid id supplied
         "404":
           description: User not found
       x-openapi-router-controller: sportsbet_server.controllers.user_controller
@@ -329,9 +329,9 @@ paths:
       description: This can only be done by the logged in user.
       operationId: update_user
       parameters:
-      - name: username
+      - name: id
         in: path
-        description: name that need to be deleted
+        description: id of the user that need to be updated
         required: true
         style: simple
         explode: false
@@ -360,9 +360,9 @@ paths:
       description: This can only be done by the logged in user.
       operationId: delete_user
       parameters:
-      - name: username
+      - name: id
         in: path
-        description: The name that needs to be deleted
+        description: The id of the user that needs to be deleted
         required: true
         style: simple
         explode: false
@@ -370,7 +370,7 @@ paths:
           type: string
       responses:
         "400":
-          description: Invalid username supplied
+          description: Invalid id supplied
         "404":
           description: User not found
       x-openapi-router-controller: sportsbet_server.controllers.user_controller
