@@ -11,23 +11,24 @@ def get_users(body=None):
     return data
 
 def create_user(user=None):  
+    
     if connexion.request.is_json:
-        user = User.from_dict(connexion.request.get_json())
+        user = connexion.request.get_json()
+
     existing_user = (
-        User.query.filter(User.email == user.email)
+        User.query.filter(User.email == user['email'])
         .one_or_none()
     )
 
     if existing_user is None:
         schema = UserSchema()
-        new_user = schema.load(user, session=db.session).data
-        new_user.id = uuid()
+        new_user = schema.load(user, session=db.session) #.data
         db.session.add(new_user)
         db.session.commit()
-        data = schema.dump(new_user).data
+        data = schema.dump(new_user)
         return data, 201
     else:
-        abort(409, f"User {user.email} already exists")
+        abort(409, f"User {user['email']} already exists")
 
 def delete_user(user_id):
 

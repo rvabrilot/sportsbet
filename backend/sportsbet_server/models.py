@@ -51,7 +51,7 @@ class Event(db.Model):
 
 class User(db.Model):
     __tablename__ = "user"
-    id = db.Column(UUID, primary_key=True)
+    id = db.Column(UUID, primary_key=True, default=uuid.uuid1() )
     email = db.Column(db.String)
     nickname = db.Column(db.String)
     credit = db.Column(db.Numeric)
@@ -62,6 +62,7 @@ class User(db.Model):
 class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = User
+        load_instance = True
 
 class Bet(db.Model):
     __tablename__ = "bet"
