@@ -30,23 +30,22 @@ def create_user(user=None):
     else:
         abort(409, f"User {user['email']} already exists")
 
-def delete_user(user_id):
-
-    user = User.query.filter(User.id == user_id).one_or_none()
+def delete_user(id_):
+    user = User.query.filter(User.id == uuid.UUID(id_)).one_or_none()
     if user is not None:
         db.session.delete(user)
         db.session.commit()
-        return make_response(f"User {user_id} deleted", 200)
+        return make_response(f"User {id_} deleted", 200)
     else:
-        abort(404, f"User not found for id: {user_id}")
+        abort(404, f"User not found for id: {id_}")
 
-def get_user_by_id(user_id):
-    user = User.query.filter(User.id == user_id).one_or_none()
+def get_user_by_id(id_:str):
+    user = User.query.filter(User.id == uuid.UUID(id_)).one_or_none()
     if user is not None:
         data = UserSchema().dump(user)
         return make_response(data, 200)
     else:
-        abort(404, f"User not found for id: {user_id}")
+        abort(404, f"User not found for id: {id_}")
 
 def login_user(email=None, md5=None):
     existing_user = (
