@@ -2,10 +2,10 @@
 
 import connexion
 
+from sportsbet_server.config import connexion_app
 
-def main():
-    connexion_app = connexion.App(__name__, specification_dir='./openapi/')
-
+def main():  
+    
     connexion_app.add_api('sportsbet_server.yaml',
      arguments={'title': 'SportsBet Backend 0.1.1'}, 
      pythonic_params=True,

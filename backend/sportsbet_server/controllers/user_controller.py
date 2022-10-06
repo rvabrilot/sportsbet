@@ -1,150 +1,110 @@
 import connexion
-import six
-
-from sportsbet_server.models import User  # noqa: E501
-from sportsbet_server import util
+from flask import make_response, abort
+from sportsbet_server.config import db
+from sportsbet_server.models import User, UserSchema
+import uuid
 
 def get_users(body=None):
-    return 'To-DO'
+    all_users = User.query.all()
+    users_schema = UserSchema(many=True)
+    data = users_schema.dump(all_users)
+    return data
+
+def create_user(user=None):  
+    if connexion.request.is_json:
+        user = User.from_dict(connexion.request.get_json())
+    existing_user = (
+        User.query.filter(User.email == user.email)
+        .one_or_none()
+    )
+
+    if existing_user is None:
+        schema = UserSchema()
+        new_user = schema.load(user, session=db.session).data
+        new_user.id = uuid()
+        db.session.add(new_user)
+        db.session.commit()
+        data = schema.dump(new_user).data
+        return data, 201
+    else:
+        abort(409, f"User {user.email} already exists")
+
+def delete_user(user_id):
+
+    user = User.query.filter(User.id == user_id).one_or_none()
+    if user is not None:
+        db.session.delete(user)
+        db.session.commit()
+        return make_response(f"User {user_id} deleted", 200)
+    else:
+        abort(404, f"User not found for id: {user_id}")
+
+def get_user_by_id(user_id):
+    user = User.query.filter(User.id == user_id).one_or_none()
+    if user is not None:
+        data = UserSchema().dump(user)
+        return make_response(data, 200)
+    else:
+        abort(404, f"User not found for id: {user_id}")
+
+def login_user(email=None, md5=None):
+    existing_user = (
+        User.query.filter(User.email == email)
+        .filter(User.md5 == md5)
+        .one_or_none()
+    )
+    if existing_user is not None:
+        login_uuid = uuid()
+        user_schema = UserSchema()
+        update = user_schema.load(existing_user, session=db.session).data
+        update.login_uuid = login_uuid
+        db.session.merge(update)
+        db.session.commit()
+
+        return make_response(login_uuid, 200)
+    else:
+        abort("invalid email or md5", 400)
+
+def logout_user(email=None, login_uuid=None):
+    existing_user = (
+        User.query.filter(User.email == email)
+        .filter(User.login_uuid == login_uuid)
+        .one_or_none()
+    )
+
+    if existing_user is not None:
+        
+        user_schema = UserSchema()
+        update = user_schema.load(existing_user, session=db.session).data
+        update.login_uuid = ""
+        db.session.merge(update)
+        db.session.commit()
+        
+        return make_response("user logged out", 200)
+    else:
+        abort("invalid email or login_uuid", 400)
+
+
+def update_user(id, body=None):  
+
+    if connexion.request.is_json:
+        body = User.from_dict(connexion.request.get_json())
     
-def create_user(body=None):  # noqa: E501
-    """Create user
+    existing_user = (
+        User.query.filter(User.id == id)
+        .one_or_none()
+    )
+    if existing_user is not None:
+        user_schema = UserSchema()
+        update = user_schema.load(existing_user, session=db.session).data
+        update.email = body.email
+        update.nickname = body.nickname
+        update.credit = body.credit
+        update.md5 = body.md5
+        update.role = body.role
+        db.session.merge(update)
+        db.session.commit()
 
-    This can only be done by the logged in user. # noqa: E501
-
-    :param body: Created user object
-    :type body: dict | bytes
-
-    :rtype: User
-    """
-    if connexion.request.is_json:
-        body = User.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
-
-
-def create_user(id=None, nickname=None, email=None, md5=None, credit=None):  # noqa: E501
-    """Create user
-
-    This can only be done by the logged in user. # noqa: E501
-
-    :param id: 
-    :type id: str
-    :param nickname: 
-    :type nickname: str
-    :param email: 
-    :type email: str
-    :param md5: 
-    :type md5: str
-    :param credit: 
-    :type credit: float
-
-    :rtype: User
-    """
-    return 'do some magic!'
-
-
-def create_users_with_list_input(body=None):  # noqa: E501
-    """Creates list of users with given input array
-
-    Creates list of users with given input array # noqa: E501
-
-    :param body: 
-    :type body: list | bytes
-
-    :rtype: User
-    """
-    if connexion.request.is_json:
-        body = [User.from_dict(d) for d in connexion.request.get_json()]  # noqa: E501
-    return 'do some magic!'
-
-
-def delete_user(username):  # noqa: E501
-    """Delete user
-
-    This can only be done by the logged in user. # noqa: E501
-
-    :param username: The name that needs to be deleted
-    :type username: str
-
-    :rtype: None
-    """
-    return 'do some magic!'
-
-
-def get_user_by_id(user_id):  # noqa: E501
-    """Get user by user name
-
-     # noqa: E501
-
-    :param username: The name that needs to be fetched. Use user1 for testing. 
-    :type username: str
-
-    :rtype: User
-    """
-    return 'do some magic!'
-
-
-def login_user(username=None, password=None):  # noqa: E501
-    """Logs user into the system
-
-     # noqa: E501
-
-    :param username: The user name for login
-    :type username: str
-    :param password: The password for login in clear text
-    :type password: str
-
-    :rtype: str
-    """
-    return 'do some magic!'
-
-
-def logout_user():  # noqa: E501
-    """Logs out current logged in user session
-
-     # noqa: E501
-
-
-    :rtype: None
-    """
-    return 'do some magic!'
-
-
-def update_user(username, body=None):  # noqa: E501
-    """Update user
-
-    This can only be done by the logged in user. # noqa: E501
-
-    :param username: name that need to be deleted
-    :type username: str
-    :param body: Update an existent user in the event
-    :type body: dict | bytes
-
-    :rtype: None
-    """
-    if connexion.request.is_json:
-        body = User.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
-
-
-def update_user(username, id=None, nickname=None, email=None, md5=None, credit=None):  # noqa: E501
-    """Update user
-
-    This can only be done by the logged in user. # noqa: E501
-
-    :param username: name that need to be deleted
-    :type username: str
-    :param id: 
-    :type id: str
-    :param nickname: 
-    :type nickname: str
-    :param email: 
-    :type email: str
-    :param md5: 
-    :type md5: str
-    :param credit: 
-    :type credit: float
-
-    :rtype: None
-    """
-    return 'do some magic!'
+        return make_response("user updated", 200)
+    else:
+        abort("invalid user id", 400)

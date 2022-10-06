@@ -181,6 +181,7 @@ CREATE TABLE `user` (
   `credit` decimal(10,10) NOT NULL DEFAULT '0.0000000000' COMMENT 'credito del usuario para jugar',
   `md5` varchar(100) NOT NULL COMMENT 'password md5',
   `role` varchar(10) NOT NULL DEFAULT 'jugador' COMMENT 'indica el rol del usuario entre: jugador o admin',
+  `login_uuid` binary(16) DEFAULT NULL COMMENT 'the uuid for a logged in user',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='usuarios del sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -191,6 +192,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (_binary '\ón82D\ï\í¥\0]#2','r@r.com','r',0.0000000000,'123','jugador',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -203,4 +205,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-04 11:38:33
+-- Dump completed on 2022-10-05 20:17:22

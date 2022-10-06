@@ -8,11 +8,10 @@ connexion_app = connexion.App(__name__, specification_dir='./openapi/')
 
 # Get the underlying Flask app instance
 flask_app = connexion_app.app
-#flask_app = connexion.FlaskApp
 
 # Configure the SQLAlchemy part of the app instance
 flask_app.config['SQLAlCHEMY_ECHO'] = True
-flask_app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://rvera:123@localhost:3660/sportbet'
+flask_app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://rvera:123@localhost:3306/sportbet?charset=utf8mb4&binary_prefix=true"'
 flask_app.config['SQLALACHEMY_TRACK_MODIFICATIONS'] = False
 
 # Create the SQLAlchemy db instance

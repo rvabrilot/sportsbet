@@ -1,7 +1,7 @@
 import connexion
 import six
 
-from sportsbet_server import util, config
+from sportsbet_server import config
 from sportsbet_server.models import (Event)
 
 

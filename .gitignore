@@ -103,5 +103,10 @@ dist
 # TernJS port file
 .tern-port
 
-
+#python3 virtual env
 venv/
+
+#visual studio code
+.vscode
+
+__pycache__

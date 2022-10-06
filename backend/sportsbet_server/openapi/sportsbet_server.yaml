@@ -600,33 +600,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
       x-openapi-router-controller: sportsbet_server.controllers.user_controller
-  /user/createWithList:
-    post:
-      tags:
-      - user
-      summary: Creates list of users with given input array
-      description: Creates list of users with given input array
-      operationId: create_users_with_list_input
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/User'
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/User'
-        default:
-          description: successful operation
-      x-openapi-router-controller: sportsbet_server.controllers.user_controller
   /user/login:
     get:
       tags:
@@ -635,9 +608,9 @@ paths:
       description: ""
       operationId: login_user
       parameters:
-      - name: username
+      - name: email
         in: query
-        description: The user name for login
+        description: The email for login
         required: false
         style: form
         explode: true
@@ -645,7 +618,7 @@ paths:
           type: string
       - name: password
         in: query
-        description: The password for login in clear text
+        description: The password for login in md5
         required: false
         style: form
         explode: true
@@ -654,21 +627,6 @@ paths:
       responses:
         "200":
           description: successful operation
-          headers:
-            X-Rate-Limit:
-              description: calls per hour allowed by the user
-              style: simple
-              explode: false
-              schema:
-                type: integer
-                format: int32
-            X-Expires-After:
-              description: date in UTC when token expires
-              style: simple
-              explode: false
-              schema:
-                type: string
-                format: date-time
           content:
             application/xml:
               schema:
@@ -678,7 +636,7 @@ paths:
               schema:
                 type: string
         "400":
-          description: Invalid username/password supplied
+          description: Invalid email/password supplied
       x-openapi-router-controller: sportsbet_server.controllers.user_controller
   /user/logout:
     get:
@@ -891,8 +849,7 @@ components:
       properties:
         id:
           type: string
-          format: int64
-          example: "10"
+          example: "2c82b556-176f-4ea3-96f5-9bb64878373b"
         nickname:
           type: string
           example: theUser
@@ -908,6 +865,9 @@ components:
         role:
           type: string
           example: "jugador"
+        login_uuid:
+          type: string
+          example: "2c82b556-176f-4ea3-96f5-9bb64878373b"
       example:
         nickname: theUser
         id: "10"

@@ -1,8 +1,7 @@
 import connexion
 import six
 
-from sportsbet_server.models import Bet  # noqa: E501
-from sportsbet_server import util
+from sportsbet_server.models import Bet
 
 
 def add_bet(user_id, event_ids, amount, api_key=None):  # noqa: E501
