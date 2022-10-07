@@ -3,16 +3,16 @@ a minimum viable product of an app that coordinates bets on sports results
 
 ## how to run
 
-# you to have installed:
+### you need to have installed:
 - docker
 - docker-compose
 
-# start everything
+### start everything
 ´´
 docker-compose up -d
 ´´
 
-# stop everything
+### stop everything
 ´´
 docker-compose down
 ´´
