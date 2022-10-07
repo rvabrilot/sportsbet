@@ -1,0 +1,41 @@
+version: '3'
+services:
+
+  sportsbet-mysql:
+    image: "mysql:8"
+    container_name: sportsbet-mysql
+    volumes:
+      - sportsbet-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=S3cret
+      - MYSQL_PASSWORD=An0thrS3crt
+      - MYSQL_USER=sport_user
+      - MYSQL_DATABASE=sportsbet
+
+  sportsbet-backend:
+    image: "rvabrilot/sportsbet:sportbet_server"
+    container_name: sportsbet-backend
+    environment:
+      - DB_SERVER=sportsbet-mysql
+      - MYSQL_DATABASE=sportsbet
+      - MYSQL_USER=sport_user
+      - MYSQL_PASSWORD=An0thrS3crt
+      - MYSQL_HOST=sportsbet-mysql
+    ports:
+      - 8080:8080
+    links:
+      - sportsbet-mysql
+
+  sportsbet-frontend:
+    image: "rvabrilot/sportsbet:sportbet_web"
+    container_name: sportsbet-frontend
+    ports:
+      - 3000:3000
+    links:
+      - sportsbet-backend
+
+
+volumes:
+  sportsbet-data:
