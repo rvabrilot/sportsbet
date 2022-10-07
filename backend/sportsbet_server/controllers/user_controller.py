@@ -22,11 +22,11 @@ def create_user(user=None):
 
     if existing_user is None:
         schema = UserSchema()
-        new_user = schema.load(user, session=db.session) #.data
+        new_user = schema.load(user, session=db.session)
         db.session.add(new_user)
         db.session.commit()
         data = schema.dump(new_user)
-        return data, 201
+        make_response( data, 201 )
     else:
         abort(409, f"User {user['email']} already exists")
 
@@ -56,7 +56,7 @@ def login_user(email=None, md5=None):
     if existing_user is not None:
         login_uuid = uuid()
         user_schema = UserSchema()
-        update = user_schema.load(existing_user, session=db.session).data
+        update = user_schema.load(existing_user, session=db.session)
         update.login_uuid = login_uuid
         db.session.merge(update)
         db.session.commit()
@@ -75,7 +75,7 @@ def logout_user(email=None, login_uuid=None):
     if existing_user is not None:
         
         user_schema = UserSchema()
-        update = user_schema.load(existing_user, session=db.session).data
+        update = user_schema.load(existing_user, session=db.session)
         update.login_uuid = ""
         db.session.merge(update)
         db.session.commit()
@@ -96,7 +96,7 @@ def update_user(id, body=None):
     )
     if existing_user is not None:
         user_schema = UserSchema()
-        update = user_schema.load(existing_user, session=db.session).data
+        update = user_schema.load(existing_user, session=db.session)
         update.email = body.email
         update.nickname = body.nickname
         update.credit = body.credit

@@ -4,7 +4,7 @@ import six
 from sportsbet_server.models import Bet
 
 
-def add_bet(user_id, event_ids, amount, api_key=None):  # noqa: E501
+def add_bet(user_id, event_ids, amount, api_key=None):
     """Add a new bet
 
     Add a new bet # noqa: E501

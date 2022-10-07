@@ -1,6 +1,6 @@
 import email
 from sportsbet_server.config import db, ma
-from sqlalchemy.dialects.mysql import BINARY, DECIMAL, DATETIME, INTEGER, TEXT, VARCHAR
+from sqlalchemy.dialects.mysql import BINARY, DECIMAL, DATETIME, INTEGER
 from sqlalchemy import types
 from sqlalchemy.dialects.mysql.base import MSBinary
 from sqlalchemy.schema import Column
@@ -32,22 +32,21 @@ class UUID(types.TypeDecorator):
 
 class Event(db.Model):
     __tablename__ = "event"
-    id = db.Column(UUID, primary_key=True)
+    id = db.Column(UUID, primary_key=True, default=uuid.uuid1())
     event_start = db.Column(DATETIME)
     event_end = db.Column(DATETIME)
-    local_player = db.Column(BINARY(16))
-    visitor_player = db.Column(BINARY(16))
-    category = db.Column(BINARY(16))
-    flv = db.Column(DECIMAL(6,4))
-    rfv = db.Column(DECIMAL(6,4))
-    ptl = db.Column(DECIMAL(6,4))
-    pte = db.Column(DECIMAL(6,4))
-    gv0 = db.Column(DECIMAL(6,4))
-    gv1 = db.Column(DECIMAL(6,4))
-    gv2 = db.Column(DECIMAL(6,4))
-    gv3 = db.Column(DECIMAL(6,4))
+    local_player = db.Column(UUID)
+    visitor_player = db.Column(UUID)
+    category = db.Column(UUID)
+    goals = db.Column(INTEGER)
+    result = db.Column(db.String)
     minimum_bets = db.Column(INTEGER)
-    stats_link = db.Column(TEXT)
+    stats_link = db.Column(db.String)
+
+class EventSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Event
+        load_instance = True
 
 class User(db.Model):
     __tablename__ = "user"
@@ -66,12 +65,37 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
 
 class Bet(db.Model):
     __tablename__ = "bet"
-    id = db.Column(BINARY(16), primary_key=True)
+    id = db.Column(UUID, primary_key=True, default=uuid.uuid1())
+    bet_datetime = db.Column(DATETIME)
+    goals = db.Column(INTEGER)
+    result = db.Column(db.String)
+    user_id = db.Column(UUID)
+    event_id = db.Column(UUID)
+    status = db.Column(db.String)
+
+
+class BetSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Bet
+        load_instance = True
+
 
 class EventPlayer(db.Model):
     __tablename__ = "event_player"
-    id = db.Column(BINARY(16), primary_key=True)
+    id = db.Column(UUID, primary_key=True, default=uuid.uuid1())
+    name = db.Column(db.String)
+
+class EventPlayerSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = EventPlayer
+        load_instance = True
 
 class EventCategory(db.Model):
     __tablename__ = "event_category"
-    id = db.Column(BINARY(16), primary_key=True)
+    id = db.Column(UUID, primary_key=True, default=uuid.uuid1())
+    name = db.Column(db.String)
+
+class EventCategorySchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = EventCategory
+        load_instance = True

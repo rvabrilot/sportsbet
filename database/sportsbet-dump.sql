@@ -25,11 +25,15 @@ DROP TABLE IF EXISTS `bet`;
 CREATE TABLE `bet` (
   `id` binary(16) NOT NULL DEFAULT (uuid_to_bin(uuid())),
   `bet_datetime` datetime NOT NULL COMMENT 'date and time of the bet',
-  `bet_amount` decimal(10,4) NOT NULL COMMENT 'credits used on this bet',
+  `goals` int NOT NULL COMMENT 'credits used on this bet',
   `user_id` binary(16) NOT NULL COMMENT 'the id of the user that made this bet',
   `status` varchar(100) NOT NULL COMMENT 'the status of the bet',
+  `result` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'resultado del evento (l: local, e:empate, v:visita)',
+  `event_id` binary(16) NOT NULL COMMENT 'el id del evento para esta apuesta',
   PRIMARY KEY (`id`),
   KEY `bet_user_id_FK` (`user_id`),
+  KEY `bet_FK` (`event_id`),
+  CONSTRAINT `bet_FK` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
   CONSTRAINT `bet_user_id_FK` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -41,36 +45,6 @@ CREATE TABLE `bet` (
 LOCK TABLES `bet` WRITE;
 /*!40000 ALTER TABLE `bet` DISABLE KEYS */;
 /*!40000 ALTER TABLE `bet` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `bet_event`
---
-
-DROP TABLE IF EXISTS `bet_event`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `bet_event` (
-  `id` binary(16) NOT NULL DEFAULT (uuid_to_bin(uuid())) COMMENT 'referencia',
-  `event_id` binary(16) NOT NULL COMMENT 'referencia al id del evento',
-  `bet_id` binary(16) NOT NULL COMMENT 'id of the event type',
-  `bet_name` varchar(3) NOT NULL COMMENT 'nombre de la apuesta ejemplo: rfl (resultado final local)',
-  `bet_factor` decimal(6,4) NOT NULL COMMENT 'el factor de la apuesta al momento de crearla',
-  PRIMARY KEY (`id`),
-  KEY `bet_event_event_id_FK` (`event_id`),
-  KEY `bet_event_bet_id_FK` (`bet_id`),
-  CONSTRAINT `bet_event_bet_id_FK` FOREIGN KEY (`bet_id`) REFERENCES `bet` (`id`),
-  CONSTRAINT `bet_event_event_id_FK` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='apuestas hechas por usuarios a eventos';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `bet_event`
---
-
-LOCK TABLES `bet_event` WRITE;
-/*!40000 ALTER TABLE `bet_event` DISABLE KEYS */;
-/*!40000 ALTER TABLE `bet_event` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -86,19 +60,10 @@ CREATE TABLE `event` (
   `local_player` binary(16) NOT NULL COMMENT 'equipo o jugador local',
   `visitor_player` binary(16) NOT NULL COMMENT 'equipo o jugador visitante',
   `category` binary(16) NOT NULL COMMENT 'categoria del evento',
-  `rfl` decimal(6,4) NOT NULL DEFAULT '0.0000' COMMENT 'factor de pago a resultado final local',
-  `rfv` decimal(6,4) NOT NULL DEFAULT '0.0000' COMMENT 'factor de pago a resultado final visitante',
-  `rfe` decimal(6,4) NOT NULL DEFAULT '0.0000' COMMENT 'factor de pago a resultado final empate',
-  `ptl` decimal(6,4) NOT NULL DEFAULT '0.0000' COMMENT 'factor de pago a primer tiempo local',
-  `ptv` decimal(6,4) NOT NULL DEFAULT '0.0000' COMMENT 'factor de pago a primer tiempo visitante',
-  `gv0` decimal(6,4) NOT NULL DEFAULT '0.0000' COMMENT 'factor de pago a gol visitante = 0',
-  `gv1` decimal(6,4) NOT NULL DEFAULT '0.0000' COMMENT 'factor de pago a gol visitante = 1',
-  `gv2` decimal(6,4) NOT NULL DEFAULT '0.0000' COMMENT 'factor de pago a gol visitante = 2',
-  `gv3` decimal(6,4) NOT NULL DEFAULT '0.0000' COMMENT 'factor de pago a gol visitante = 3',
-  `pte` decimal(6,4) NOT NULL DEFAULT '0.0000' COMMENT 'factor de pago a primer tiempo empate',
   `event_end` datetime NOT NULL COMMENT 'fecha y hora de finalizacion del evento',
-  `minimum_bets` int NOT NULL DEFAULT '1' COMMENT 'minima cantidad de apuestas para este evento',
   `stats_link` text NOT NULL COMMENT 'link a website con estadisticas (como sportsradar)',
+  `goals` int DEFAULT NULL COMMENT 'cantidad de goles del ganador o del empate',
+  `result` char(1) DEFAULT NULL COMMENT 'l: local, e: empate, v:visita',
   PRIMARY KEY (`id`),
   UNIQUE KEY `event_UN` (`event_start`,`local_player`,`visitor_player`,`category`),
   KEY `event_category_FK` (`category`),
@@ -192,7 +157,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (_binary '\ón82D\ï\í¥\0]#2','r@r.com','r',0.0000000000,'123','jugador',NULL);
+INSERT INTO `user` VALUES (_binary '	œLE}\í‘I\0]#2','r1@r.com','r1',0.0000000000,'123','jugador',NULL),(_binary '\ón82D\ï\í¥\0]#2','r@r.com','r',0.0000000000,'123','jugador',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -205,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-05 20:17:22
+-- Dump completed on 2022-10-07 12:45:59
