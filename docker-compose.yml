@@ -13,6 +13,14 @@ services:
       - MYSQL_PASSWORD=An0thrS3crt
       - MYSQL_USER=sport_user
       - MYSQL_DATABASE=sportsbet
+ 
+  db_seeder:
+    image: mysql:8
+    volumes:
+      - ./database/sportsbet-dump.sql:/db.sql
+    entrypoint: [ "bash", "-c", "sleep 10 && mysql --user=root -h sportsbet-mysql -pS3cret --protocol=tcp --port=3306 sportsbet < /db.sql && exit"] 
+    depends_on:
+      - sportsbet-mysql
 
   sportsbet-backend:
     image: "rvabrilot/sportsbet:sportbet_server"
@@ -27,6 +35,8 @@ services:
       - 8080:8080
     links:
       - sportsbet-mysql
+    depends_on:
+      - db_seeder
 
   sportsbet-frontend:
     image: "rvabrilot/sportsbet:sportbet_web"
@@ -35,7 +45,8 @@ services:
       - 3000:3000
     links:
       - sportsbet-backend
-
+    depends_on:
+      - db_seeder
 
 volumes:
   sportsbet-data:
