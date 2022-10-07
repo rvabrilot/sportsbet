@@ -23,7 +23,7 @@ services:
       - sportsbet-mysql
 
   sportsbet-backend:
-    image: "rvabrilot/sportsbet:sportbet_server"
+    image: "rvabrilot/sportsbet@sha256:9cbd0799ee2f84f5bf413dbdd11091b53d9d1f4eb33a8a14d6f623d84c4dd4bf"
     container_name: sportsbet-backend
     environment:
       - DB_SERVER=sportsbet-mysql
