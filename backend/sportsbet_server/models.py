@@ -9,6 +9,7 @@ import uuid
 
 class UUID(types.TypeDecorator):
     impl = MSBinary
+    cache_ok=False
     def __init__(self):
         self.impl.length = 16
         types.TypeDecorator.__init__(self,length=self.impl.length)

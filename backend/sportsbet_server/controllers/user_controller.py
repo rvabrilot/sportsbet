@@ -1,8 +1,8 @@
-import connexion
+import connexion, uuid
 from flask import make_response, abort
 from sportsbet_server.config import db
 from sportsbet_server.models import User, UserSchema
-import uuid
+
 
 def get_users(body=None):
     all_users = User.query.all()
@@ -26,7 +26,7 @@ def create_user(user=None):
         db.session.add(new_user)
         db.session.commit()
         data = schema.dump(new_user)
-        make_response( data, 201 )
+        return make_response( data, 201 )
     else:
         abort(409, f"User {user['email']} already exists")
 
@@ -85,26 +85,23 @@ def logout_user(email=None, login_uuid=None):
         abort("invalid email or login_uuid", 400)
 
 
-def update_user(id, body=None):  
+def update_user(user=None):  
 
     if connexion.request.is_json:
-        body = User.from_dict(connexion.request.get_json())
+        user = connexion.request.get_json()
     
-    existing_user = (
-        User.query.filter(User.id == id)
-        .one_or_none()
-    )
+    existing_user = User.query.filter(User.id == uuid.UUID(user["id"]) ).one_or_none()
+    
     if existing_user is not None:
         user_schema = UserSchema()
-        update = user_schema.load(existing_user, session=db.session)
-        update.email = body.email
-        update.nickname = body.nickname
-        update.credit = body.credit
-        update.md5 = body.md5
-        update.role = body.role
-        db.session.merge(update)
+        existing_user.email = user["email"]
+        existing_user.nickname = user["nickname"]
+        existing_user.credit = user["credit"]
+        existing_user.md5 = user["md5"]
+        existing_user.role = user["role"]
+        db.session.merge(existing_user)
         db.session.commit()
-
-        return make_response("user updated", 200)
+        data = user_schema.dump(existing_user)
+        return make_response(data, 200)
     else:
         abort("invalid user id", 400)

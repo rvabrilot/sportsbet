@@ -600,6 +600,28 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
       x-openapi-router-controller: sportsbet_server.controllers.user_controller
+    put:
+      tags:
+      - user
+      summary: Update user
+      description: This can only be done by the logged in user.
+      operationId: update_user
+      requestBody:
+        description: Update an existent user in the event
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        default:
+          description: successful operation
+      x-openapi-router-controller: sportsbet_server.controllers.user_controller
   /user/login:
     get:
       tags:
@@ -680,37 +702,6 @@ paths:
           description: Invalid id supplied
         "404":
           description: User not found
-      x-openapi-router-controller: sportsbet_server.controllers.user_controller
-    put:
-      tags:
-      - user
-      summary: Update user
-      description: This can only be done by the logged in user.
-      operationId: update_user
-      parameters:
-      - name: id
-        in: path
-        description: id of the user that need to be updated
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      requestBody:
-        description: Update an existent user in the event
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/User'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/User'
-      responses:
-        default:
-          description: successful operation
       x-openapi-router-controller: sportsbet_server.controllers.user_controller
     delete:
       tags:
@@ -795,51 +786,20 @@ components:
         category:
           type: string
           example: Futbol de Chile - Primera Division
-        rlf:
+        goals:
           type: number
-          example: 1.2
-        rfv:
-          type: number
-          example: 1.2
-        rfe:
-          type: number
-          example: 1.2
-        ptl:
-          type: number
-          example: 1.2
-        ptv:
-          type: number
-          example: 1.2
-        pte:
-          type: number
-          example: 1.2
-        gv0:
-          type: number
-          example: 1.2
-        gv1:
-          type: number
-          example: 1.2
-        gv2:
-          type: number
-          example: 1.2
-        gv3:
-          type: number
-          example: 1.2
+          example: 1
+        result:
+          type: string
+          example: l
+        stats_link:
+          type: string
+          example: 
       example:
-        pte: 1.2
-        gv0: 1.2
-        gv2: 1.2
-        rfv: 1.2
-        gv1: 1.2
-        gv3: 1.2
         local_player: U. de Chile
         visitor_player: U. de Chile
-        ptl: 1.2
-        rlf: 1.2
-        rfe: 1.2
         event_start: 2020-08-01 08:50
         event_end: 2020-08-01 08:50
-        ptv: 1.2
         id: 07cb3c2c-b40c-472f-b05c-7168ac4327e0
         category: Futbol de Chile - Primera Division
       xml:
@@ -892,15 +852,9 @@ components:
         bet_datetime:
           type: string
           example: 2022-08-01 23:59
-        bet_amount:
+        goals:
           type: number
-          example: 1000
-        events:
-          type: array
-          xml:
-            wrapped: true
-          items:
-            $ref: '#/components/schemas/Event'
+          example: 1
         status:
           type: string
           description: bet status

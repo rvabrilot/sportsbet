@@ -16,3 +16,7 @@ docker-compose up -d
 ```
 docker-compose down
 ```
+
+
+## How to develop
+check out the repo and then read the README files on each folder to know how to develop each

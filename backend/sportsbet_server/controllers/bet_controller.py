@@ -5,7 +5,7 @@ from sportsbet_server.models import Bet
 
 
 def add_bet(user_id, event_ids, amount, api_key=None):
-
+    
     return 'do some magic!'
 
 
