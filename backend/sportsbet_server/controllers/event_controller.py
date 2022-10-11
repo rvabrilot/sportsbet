@@ -6,6 +6,8 @@ from sportsbet_server.models import Event, EventSchema
 def add_event():
     if connexion.request.is_json:
         event = connexion.request.get_json()
+    else:
+        abort(400, "no info provided in json")
 
     existing_user = (
         Event.query.filter(Event.local_player == event['local_player'])

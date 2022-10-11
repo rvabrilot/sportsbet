@@ -14,6 +14,8 @@ def create_user(user=None):
     
     if connexion.request.is_json:
         user = connexion.request.get_json()
+    else:
+        abort(400, "no info provided in json")
 
     existing_user = (
         User.query.filter(User.email == user['email'])
@@ -89,6 +91,8 @@ def update_user(user=None):
 
     if connexion.request.is_json:
         user = connexion.request.get_json()
+    else:
+        abort(400, "no info provided in json")
     
     existing_user = User.query.filter(User.id == uuid.UUID(user["id"]) ).one_or_none()
     

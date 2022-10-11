@@ -41,7 +41,6 @@ class Event(db.Model):
     category = db.Column(UUID)
     goals = db.Column(INTEGER)
     result = db.Column(db.String)
-    minimum_bets = db.Column(INTEGER)
     stats_link = db.Column(db.String)
 
 class EventSchema(ma.SQLAlchemyAutoSchema):

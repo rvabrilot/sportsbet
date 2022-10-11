@@ -13,6 +13,8 @@ def get_event_categories():
 def add_event_category():
     if connexion.request.is_json:
         ec = connexion.request.get_json()
+    else:
+        abort(400, "no info provided in json")
     
     existing_ec = (
         EventCategory.query.filter(EventCategory.name == ec['name'])
@@ -50,6 +52,8 @@ def delete_event_category(id_:str):
 def update_event_category(id_:str, name):
     if connexion.request.is_json:
         body = EventCategory.from_dict(connexion.request.get_json())
+    else:
+        abort(400, "no info provided in json")
     
     existing_ec = (
         EventCategory.query.filter(EventCategory.id == id)

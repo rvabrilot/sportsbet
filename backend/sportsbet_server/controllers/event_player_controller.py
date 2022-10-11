@@ -14,6 +14,8 @@ def get_event_players():
 def add_event_player():
     if connexion.request.is_json:
         ep = connexion.request.get_json()
+    else:
+        abort(400, "no info provided in json")
     
     existing_ep = (
         EventPlayer.query.filter(EventPlayer.name == ep['name'])
@@ -51,6 +53,8 @@ def delete_event_player(id_:str):
 def update_event_player(id_:str, name_:str):
     if connexion.request.is_json:
         body = EventPlayer.from_dict(connexion.request.get_json())
+    else:
+        abort(400, "no info provided in json")
     
     existing_ep = (
         EventPlayer.query.filter(EventPlayer.id == id)

@@ -8,6 +8,8 @@ def add_bet(bet=None):
 
     if connexion.request.is_json:
         bet = connexion.request.get_json()
+    else:
+        abort(400, "no info provided in json")
     
     existing_bet = (Bet.query.filter(Bet.event_id == bet['event_id'])
     .filter(Bet.user_id == bet["user_id"])
