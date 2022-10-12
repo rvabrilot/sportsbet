@@ -11,21 +11,25 @@ def get_event_players():
     data = eps_schema.dump(all_eps)
     return data
 
-def add_event_player(name = None):
+def add_event_player():
+    if connexion.request.is_json:
+        body = connexion.request.get_json()
+    else:
+        return make_response("no info provided in json", 400)
     
-    existing_ep = EventPlayer.query.filter(EventPlayer.name == name ).one_or_none()
+    existing_ep = EventPlayer.query.filter(EventPlayer.name == body["name"] ).one_or_none()
 
     if existing_ep is None:
         schema = EventPlayerSchema()
         new_ep = EventPlayer()
-        new_ep.name = name
+        new_ep.name = body["name"]
         new_ep.id = uuid.uuid1()
         db.session.add(new_ep)
         db.session.commit()
         data = schema.dump(new_ep)
         return make_response(data, 201)
     else:
-        return make_response(f"Event Player: {name} already exists", 409)
+        return make_response(f"Event Player: {body['name']} already exists", 409)
     
 def get_event_player_by_id(id_:str):
     ep = EventPlayer.query.filter(EventPlayer.id == uuid.UUID(id_)).one_or_none()
