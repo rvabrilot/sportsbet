@@ -3,6 +3,7 @@ from sportsbet_server.config import db, ma
 from sqlalchemy.dialects.mysql import DATETIME, INTEGER
 from sqlalchemy import types
 from sqlalchemy.dialects.mysql.base import MSBinary
+from sqlalchemy.sql import func
 import uuid
 
 
@@ -64,7 +65,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
 class Bet(db.Model):
     __tablename__ = "bet"
     id = db.Column(UUID, primary_key=True, default=uuid.uuid1())
-    bet_datetime = db.Column(DATETIME)
+    bet_datetime = db.Column(DATETIME, default=func.now())
     goals = db.Column(INTEGER)
     result = db.Column(db.String)
     user_id = db.Column(UUID)

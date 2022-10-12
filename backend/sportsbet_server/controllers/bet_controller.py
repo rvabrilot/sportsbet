@@ -11,19 +11,49 @@ def add_bet(bet=None):
     else:
         return make_response(400, "no info provided in json")
     
-    existing_bet = (Bet.query.filter(Bet.event_id == bet['event_id'])
-    .filter(Bet.user_id == bet["user_id"])
+    existing_bet = (Bet.query.filter(Bet.event_id == uuid.UUID(bet['event_id']))
+    .filter(Bet.user_id == uuid.UUID(bet["user_id"]))
     .one_or_none()
     )
 
     if existing_bet is None:
         schema = BetSchema()
-        new_bet = schema.load(bet, session=db.session)
+        new_bet = Bet()
+        new_bet.event_id = uuid.UUID(bet['event_id'])
+        new_bet.user_id = uuid.UUID(bet["user_id"])
+        new_bet.goals = bet["goals"]
+        new_bet.result = bet["result"]
+        new_bet.status = "created"
         new_bet.id = uuid.uuid1()
         db.session.add(new_bet)
         db.session.commit()
     
         return make_response(schema.dump(new_bet), 201)
+    else:
+        return make_response(409, f"Bet for user_id: {bet['user_id']} and event_id:{bet['event_id']} already exists")
+
+def update_bet(bet=None):
+
+    if connexion.request.is_json:
+        bet = connexion.request.get_json()
+    else:
+        return make_response(400, "no info provided in json")
+    
+    existing_bet = (Bet.query.filter(Bet.id == uuid.UUID(bet['id']))
+        .one_or_none()
+    )
+
+    if existing_bet is not None:
+        schema = BetSchema()
+        existing_bet.event_id = uuid.UUID(bet['event_id'])
+        existing_bet.user_id = uuid.UUID(bet["user_id"])
+        existing_bet.goals = bet["goals"]
+        existing_bet.result = bet["result"]
+        existing_bet.status = "updated"
+        db.session.merge(existing_bet)
+        db.session.commit()
+    
+        return make_response(schema.dump(existing_bet), 201)
     else:
         return make_response(409, f"Bet for user_id: {bet['user_id']} and event_id:{bet['event_id']} already exists")
 
