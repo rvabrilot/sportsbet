@@ -56,7 +56,7 @@ def login_user(email=None, md5=None):
         .one_or_none()
     )
     if existing_user is not None:
-        login_uuid = uuid()
+        login_uuid = uuid.uuid1()
         user_schema = UserSchema()
         update = user_schema.load(existing_user, session=db.session)
         update.login_uuid = login_uuid

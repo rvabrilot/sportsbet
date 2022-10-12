@@ -1,9 +1,8 @@
 import email
 from sportsbet_server.config import db, ma
-from sqlalchemy.dialects.mysql import BINARY, DECIMAL, DATETIME, INTEGER
+from sqlalchemy.dialects.mysql import DATETIME, INTEGER
 from sqlalchemy import types
 from sqlalchemy.dialects.mysql.base import MSBinary
-from sqlalchemy.schema import Column
 import uuid
 
 

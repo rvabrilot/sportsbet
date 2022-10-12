@@ -176,14 +176,6 @@ paths:
       description: Add a new event player
       operationId: add_event_player
       parameters:
-      - name: api_key
-        in: header
-        description: ""
-        required: false
-        style: simple
-        explode: false
-        schema:
-          type: string
       - name: name
         in: query
         description: the name of the event player
@@ -272,21 +264,13 @@ paths:
         "400":
           description: Invalid event_player value
       x-openapi-router-controller: sportsbet_server.controllers.event_player_controller
-    put:
+  /update_event_player:
+    post:
       tags:
       - event_player
       summary: Update event_player
       description: This can only be done by the logged in event_player.
       operationId: update_event_player
-      parameters:
-      - name: id
-        in: path
-        description: id of the event_player that need to be updated
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
       requestBody:
         description: Update an existent event_player in the event
         content:
@@ -303,6 +287,29 @@ paths:
         default:
           description: successful operation
       x-openapi-router-controller: sportsbet_server.controllers.event_player_controller
+  /update_event_category:
+    post:
+      tags:
+      - event_category
+      summary: Update event_category
+      description: This can only be done by the logged in event_category.
+      operationId: update_event_category
+      requestBody:
+        description: Update an existent event_category in the event
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventCategory'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/EventCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EventCategory'
+      responses:
+        default:
+          description: successful operation
+      x-openapi-router-controller: sportsbet_server.controllers.event_category_controller
   /event_category:
     get:
       tags:
@@ -331,14 +338,6 @@ paths:
       description: Add a new event player
       operationId: add_event_category
       parameters:
-      - name: api_key
-        in: header
-        description: ""
-        required: false
-        style: simple
-        explode: false
-        schema:
-          type: string
       - name: name
         in: query
         description: the name of the event player
@@ -426,37 +425,6 @@ paths:
       responses:
         "400":
           description: Invalid event_category value
-      x-openapi-router-controller: sportsbet_server.controllers.event_category_controller
-    put:
-      tags:
-      - event_category
-      summary: Update event_category
-      description: This can only be done by the logged in event_category.
-      operationId: update_event_category
-      parameters:
-      - name: id
-        in: path
-        description: id of the event_category that need to be updated
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      requestBody:
-        description: Update an existent event_category in the event
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EventCategory'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/EventCategory'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/EventCategory'
-      responses:
-        default:
-          description: successful operation
       x-openapi-router-controller: sportsbet_server.controllers.event_category_controller
   /event:
     get:
@@ -600,7 +568,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
       x-openapi-router-controller: sportsbet_server.controllers.user_controller
-    put:
+  /update_user:
+    post:
       tags:
       - user
       summary: Update user
