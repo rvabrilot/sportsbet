@@ -52,7 +52,6 @@ class User(db.Model):
     id = db.Column(UUID, primary_key=True, default=uuid.uuid1() )
     email = db.Column(db.String)
     nickname = db.Column(db.String)
-    credit = db.Column(db.Numeric)
     md5 = db.Column(db.String)
     role = db.Column(db.String)
     login_uuid = db.Column(UUID)

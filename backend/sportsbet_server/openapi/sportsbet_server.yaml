@@ -59,14 +59,6 @@ paths:
         explode: true
         schema:
           type: string
-      - name: amount
-        in: query
-        description: amount of credits for this bet to be taken from the user
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
       responses:
         "200":
           description: Successful operation
@@ -811,9 +803,6 @@ components:
         md5:
           type: string
           example: "12345"
-        credit:
-          type: number
-          example: 12345
         role:
           type: string
           example: "jugador"
@@ -823,7 +812,6 @@ components:
       example:
         nickname: theUser
         id: "10"
-        credit: 12345
         email: john@email.com
         md5: "12345"
         role: "jugador"

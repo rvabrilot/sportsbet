@@ -43,3 +43,9 @@ def get_bet_by_id(id_):
         return make_response(data, 200)
     else:
         return make_response(404, f"Bet not found for id: {id_}")
+
+def get_bets():
+    all_bets = Bet.query.all()
+    bet_schema = BetSchema(many=True)
+    data = bet_schema.dump(all_bets)
+    return data

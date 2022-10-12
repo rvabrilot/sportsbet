@@ -81,6 +81,7 @@ CREATE TABLE `event` (
 
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
+INSERT INTO `event` VALUES (_binary '½\Þ2>JFí•ª\0]1e','2020-08-01 08:50:00',_binary '\'\æ0JJ4\í›\Ù\0]1e',_binary '\ð\Úm\ÖJ4\í˜ù\0]1e',_binary '…Cn\ÒJ5\í»\Ã\0]1e','2020-08-01 08:50:00','https://s5.sir.sportradar.com/intralotchile/es/1/season/90425/h2h/6092/706/match/31672715',1,'l');
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -105,6 +106,7 @@ CREATE TABLE `event_category` (
 
 LOCK TABLES `event_category` WRITE;
 /*!40000 ALTER TABLE `event_category` DISABLE KEYS */;
+INSERT INTO `event_category` VALUES (_binary '\ì¨ý¼J5\í¸²\0]1e','Primera Division Argentina'),(_binary '…Cn\ÒJ5\í»\Ã\0]1e','Primera Division Chile');
 /*!40000 ALTER TABLE `event_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,6 +131,7 @@ CREATE TABLE `event_player` (
 
 LOCK TABLES `event_player` WRITE;
 /*!40000 ALTER TABLE `event_player` DISABLE KEYS */;
+INSERT INTO `event_player` VALUES (_binary '\Ì\ã†\öJ4\í˜\0]1e','Cobreloa'),(_binary '\ð\Úm\ÖJ4\í˜ù\0]1e','Cobresal'),(_binary '\'\æ0JJ4\í›\Ù\0]1e','Colo Colo'),(_binary '\Ø\àBZJ4\íšk\0]1e','Huachipato'),(_binary '\Ø\Ü\×J3\í”M\0]1e','U. Catolica'),(_binary 'Ä†VJ3\í¦\Õ\0]1e','U. de Chile'),(_binary 'dºÙžJ4í†Ÿ\0]1e','Union EspaÃ±ola');
 /*!40000 ALTER TABLE `event_player` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,7 +146,6 @@ CREATE TABLE `user` (
   `id` binary(16) NOT NULL DEFAULT (uuid_to_bin(uuid())),
   `email` varchar(100) NOT NULL COMMENT 'correo electronico',
   `nickname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'apodo que el usuario elige',
-  `credit` decimal(10,10) NOT NULL DEFAULT '0.0000000000' COMMENT 'credito del usuario para jugar',
   `md5` varchar(100) NOT NULL COMMENT 'password md5',
   `role` varchar(10) NOT NULL DEFAULT 'jugador' COMMENT 'indica el rol del usuario entre: jugador o admin',
   `login_uuid` binary(16) DEFAULT NULL COMMENT 'the uuid for a logged in user',
@@ -157,7 +159,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (_binary '	œLE}\í‘I\0]#2','r1@r.com','r1',0.0000000000,'123','jugador',NULL),(_binary '\ón82D\ï\í¥\0]#2','r@r.com','r',0.0000000000,'123','jugador',NULL);
+INSERT INTO `user` VALUES (_binary '	œLE}\í‘I\0]#2','r1@r.com','r1','123','jugador',NULL),(_binary '—OJK\í½&\0]1e','r7@r.com','r1','123','jugador',NULL),(_binary '›P\ÜJK\í€q\0]1e','r8@r.com','r1','123','jugador',NULL),(_binary '\Ê\Ý@\nJL\í¼¤\0]1e','r9@r.com','r1','123','jugador',NULL),(_binary '\ó\óIv\íº\0]SS','r3@r.com','r1','12345','jugador',NULL),(_binary '\ón82D\ï\í¥\0]#2','r@r.com','r','123','jugador',NULL),(_binary 'þ5^Iu\í˜\ê\0]SS','r2@r.com','r1','123','jugador',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -170,4 +172,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-07 18:05:24
+-- Dump completed on 2022-10-12 13:56:12

@@ -101,7 +101,6 @@ def update_user(user=None):
         user_schema = UserSchema()
         existing_user.email = user["email"]
         existing_user.nickname = user["nickname"]
-        existing_user.credit = user["credit"]
         existing_user.md5 = user["md5"]
         existing_user.role = user["role"]
         db.session.merge(existing_user)
