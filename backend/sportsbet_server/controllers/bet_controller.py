@@ -19,6 +19,7 @@ def add_bet(bet=None):
     if existing_bet is None:
         schema = BetSchema()
         new_bet = schema.load(bet, session=db.session)
+        new_bet.id = uuid.uuid1()
         db.session.add(new_bet)
         db.session.commit()
     

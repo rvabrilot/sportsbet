@@ -20,6 +20,7 @@ def add_event():
     if existing_user is None:
         schema = EventSchema()
         new_event = Event() #schema.load(event, session=db.session)
+        new_event.id = uuid.uuid1()
         new_event.category = uuid.UUID(event['category'])
         new_event.local_player = uuid.UUID(event['local_player'])
         new_event.visitor_player = uuid.UUID(event['visitor_player'])

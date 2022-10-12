@@ -25,6 +25,7 @@ def create_user(user=None):
     if existing_user is None:
         schema = UserSchema()
         new_user = schema.load(user, session=db.session)
+        new_user.id = uuid.uuid1()
         db.session.add(new_user)
         db.session.commit()
         data = schema.dump(new_user)
