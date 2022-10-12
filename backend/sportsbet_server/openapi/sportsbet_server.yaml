@@ -197,6 +197,29 @@ paths:
         "405":
           description: Invalid input
       x-openapi-router-controller: sportsbet_server.controllers.event_player_controller
+  /update_event:
+    post:
+      tags:
+      - event
+      summary: Update event
+      description: This can only be done by the logged in.
+      operationId: update_event
+      requestBody:
+        description: Update an existent event
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Event'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        default:
+          description: successful operation
+      x-openapi-router-controller: sportsbet_server.controllers.event_controller
   /event_player/{Id}:
     get:
       tags:
