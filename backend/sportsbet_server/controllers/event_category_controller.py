@@ -23,7 +23,7 @@ def add_event_category(name):
         data = schema.dump(new_ep)
         return make_response(data, 201)
     else:
-        abort(409, f"Event Player: {name} already exists")
+        return make_response(f"Event Player: {name} already exists", 409)
 
 def get_event_category_by_id(id_:str):
     ec = EventCategory.query.filter(EventCategory.id == uuid.UUID(id_)).one_or_none()
@@ -32,7 +32,7 @@ def get_event_category_by_id(id_:str):
         data = EventCategorySchema().dump(ec)
         return make_response(data, 200)
     else:
-        abort(404, f"EventCategory not found for id: {id_}")
+        return make_response(f"EventCategory not found for id: {id_}", 400)
 
 def delete_event_category(id_:str):
     ec = EventCategory.query.filter(EventCategory.id == uuid.UUID(id_)).one_or_none()
@@ -41,13 +41,13 @@ def delete_event_category(id_:str):
         db.session.commit()
         return make_response(f"EventCategory {id_} deleted", 200)
     else:
-        abort(404, f"EventCategory not found for id: {id_}")
+        return make_response(f"EventCategory not found for id: {id_}", 404)
 
 def update_event_category():
     if connexion.request.is_json:
         body = connexion.request.get_json()
     else:
-        abort(400, "no info provided in json")
+        return make_response("no info provided in json", 400)
     
     existing_ec = (
         EventCategory.query.filter(EventCategory.id == uuid.UUID(body["id"]))
@@ -61,4 +61,4 @@ def update_event_category():
         data = schema.dump(existing_ec)
         return make_response(data, 200)
     else:
-        abort("invalid Event Category id", 400)
+        return make_response("invalid Event Category id", 400)

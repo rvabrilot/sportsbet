@@ -15,7 +15,7 @@ def create_user(user=None):
     if connexion.request.is_json:
         user = connexion.request.get_json()
     else:
-        abort(400, "no info provided in json")
+        return make_response("no info provided in json", 400)
 
     existing_user = (
         User.query.filter(User.email == user['email'])
@@ -30,7 +30,7 @@ def create_user(user=None):
         data = schema.dump(new_user)
         return make_response( data, 201 )
     else:
-        abort(409, f"User {user['email']} already exists")
+        return make_response(f"User {user['email']} already exists", 409)
 
 def delete_user(id_):
     user = User.query.filter(User.id == uuid.UUID(id_)).one_or_none()
@@ -39,7 +39,7 @@ def delete_user(id_):
         db.session.commit()
         return make_response(f"User {id_} deleted", 200)
     else:
-        abort(404, f"User not found for id: {id_}")
+        return make_response(f"User not found for id: {id_}", 404)
 
 def get_user_by_id(id_:str):
     user = User.query.filter(User.id == uuid.UUID(id_)).one_or_none()
@@ -47,7 +47,7 @@ def get_user_by_id(id_:str):
         data = UserSchema().dump(user)
         return make_response(data, 200)
     else:
-        abort(404, f"User not found for id: {id_}")
+        return make_response(f"User not found for id: {id_}", 404)
 
 def login_user(email=None, md5=None):
     existing_user = (
@@ -65,7 +65,7 @@ def login_user(email=None, md5=None):
 
         return make_response(login_uuid, 200)
     else:
-        abort("invalid email or md5", 400)
+        return make_response("invalid email or md5", 400)
 
 def logout_user(email=None, login_uuid=None):
     existing_user = (
@@ -84,7 +84,7 @@ def logout_user(email=None, login_uuid=None):
         
         return make_response("user logged out", 200)
     else:
-        abort("invalid email or login_uuid", 400)
+        return make_response("invalid email or login_uuid", 400)
 
 
 def update_user(user=None):  
@@ -92,7 +92,7 @@ def update_user(user=None):
     if connexion.request.is_json:
         user = connexion.request.get_json()
     else:
-        abort(400, "no info provided in json")
+        return make_response("no info provided in json", 400)
     
     existing_user = User.query.filter(User.id == uuid.UUID(user["id"]) ).one_or_none()
     
@@ -108,4 +108,4 @@ def update_user(user=None):
         data = user_schema.dump(existing_user)
         return make_response(data, 200)
     else:
-        abort("invalid user id", 400)
+        return make_response("invalid user id", 400)

@@ -9,7 +9,7 @@ def add_bet(bet=None):
     if connexion.request.is_json:
         bet = connexion.request.get_json()
     else:
-        abort(400, "no info provided in json")
+        return make_response(400, "no info provided in json")
     
     existing_bet = (Bet.query.filter(Bet.event_id == bet['event_id'])
     .filter(Bet.user_id == bet["user_id"])
@@ -24,7 +24,7 @@ def add_bet(bet=None):
     
         return make_response(schema.dump(new_bet), 201)
     else:
-        abort(409, f"Bet for user_id: {bet['user_id']} and event_id:{bet['event_id']} already exists")
+        return make_response(409, f"Bet for user_id: {bet['user_id']} and event_id:{bet['event_id']} already exists")
 
 
 def delete_bet(id_):
@@ -41,4 +41,4 @@ def get_bet_by_id(id_):
         data = BetSchema().dump(bet)
         return make_response(data, 200)
     else:
-        abort(404, f"Bet not found for id: {id_}")
+        return make_response(404, f"Bet not found for id: {id_}")

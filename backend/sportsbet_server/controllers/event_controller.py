@@ -7,7 +7,7 @@ def add_event():
     if connexion.request.is_json:
         event = connexion.request.get_json()
     else:
-        abort(400, "no info provided in json")
+        return make_response("no info provided in json", 400)
 
     existing_user = (
         Event.query.filter(Event.local_player == event['local_player'])
@@ -23,9 +23,9 @@ def add_event():
         db.session.add(new)
         db.session.commit()
         data = schema.dump(new)
-        make_response( data, 201 )
+        return make_response( data, 201 )
     else:
-        abort(409, f"Event already exists")
+        return make_response(f"Event already exists", 409)
 
 def get_event_by_id(id_):
     event = Event.query.filter(Event.id == uuid.UUID(id_)).one_or_none()
@@ -33,7 +33,7 @@ def get_event_by_id(id_):
         data = EventSchema().dump(event)
         return make_response(data, 200)
     else:
-        abort(404, f"Event not found for id: {id_}")
+        return make_response(f"Event not found for id: {id_}", 404)
 
 def get_events():  
     all = Event.query.all()

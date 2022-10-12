@@ -25,7 +25,7 @@ def add_event_player(name = None):
         data = schema.dump(new_ep)
         return make_response(data, 201)
     else:
-        abort(409, f"Event Player: {name} already exists")
+        return make_response(f"Event Player: {name} already exists", 409)
     
 def get_event_player_by_id(id_:str):
     ep = EventPlayer.query.filter(EventPlayer.id == uuid.UUID(id_)).one_or_none()
@@ -34,7 +34,7 @@ def get_event_player_by_id(id_:str):
         data = EventPlayerSchema().dump(ep)
         return make_response(data, 200)
     else:
-        abort(404, f"EventPlayer not found for id: {id_}")
+        return make_response(f"EventPlayer not found for id: {id_}", 404)
 
 def delete_event_player(id_:str):
     ep = EventPlayer.query.filter(EventPlayer.id == uuid.UUID(id_)).one_or_none()
@@ -43,13 +43,13 @@ def delete_event_player(id_:str):
         db.session.commit()
         return make_response(f"EventPlayer {id_} deleted", 200)
     else:
-        abort(404, f"EventPlayer not found for id: {id_}")
+        return make_response(f"EventPlayer not found for id: {id_}", 400)
     
 def update_event_player():
     if connexion.request.is_json:
         body = connexion.request.get_json()
     else:
-        abort(400, "no info provided in json")
+        return make_response("no info provided in json", 400)
     
     existing_ec = (
         EventPlayer.query.filter(EventPlayer.id == uuid.UUID(body["id"]))
@@ -63,4 +63,4 @@ def update_event_player():
         data = schema.dump(existing_ec)
         return make_response(data, 200)
     else:
-        abort("invalid Event Player id", 400)
+        return make_response("invalid Event Player id", 400)
