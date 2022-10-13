@@ -110,3 +110,5 @@ venv/
 .vscode
 
 __pycache__
+
+frontCrud/package-lock.json
