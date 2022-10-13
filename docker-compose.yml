@@ -39,10 +39,20 @@ services:
       - db_seeder
 
   sportsbet-frontend:
-    image: "rvabrilot/sportsbet:sportbet_web"
+    image: "rvabrilot/sportsbet@sha256:7a2309be8509150f4a4796a9f22187b6701bbf9fc53bf7e53257f0c7b6491082"
     container_name: sportsbet-frontend
     ports:
-      - 3000:3000
+      - 80:3000
+    links:
+      - sportsbet-backend
+    depends_on:
+      - db_seeder
+  
+  sportsbet-admin:
+    image: "rvabrilot/sportsbet@sha256:dbe2e91f2b9ca43a2fe8b5e3970f58949c3a56b12e64e52983e61f6830ebf9b1"
+    container_name: sportsbet-admin
+    ports:
+      - 20900:3000
     links:
       - sportsbet-backend
     depends_on:
