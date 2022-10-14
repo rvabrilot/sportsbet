@@ -1,0 +1,561 @@
+{
+	"info": {
+		"_postman_id": "572d7ba3-d6c8-428d-beab-dd2e071227e3",
+		"name": "sportsbet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "GET /user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v3/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /user/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v3/user/9b0850dc-4a4b-11ed-8071-00155d311865",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"user",
+								"9b0850dc-4a4b-11ed-8071-00155d311865"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE /user/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v3/user/9b0850dc-4a4b-11ed-8071-00155d311865",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"user",
+								"9b0850dc-4a4b-11ed-8071-00155d311865"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"r10@r.com\",\r\n    \"login_uuid\": null,\r\n    \"md5\": \"123\",\r\n    \"nickname\": \"r1\",\r\n    \"role\": \"jugador\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v3/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"user"
+							]
+						},
+						"description": "creates a user"
+					},
+					"response": []
+				},
+				{
+					"name": "/update_user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"4c1d2bce-4a4f-11ed-bf4b-00155d311865\",\r\n    \"email\": \"r11@r.com\",\r\n    \"login_uuid\": null,\r\n    \"md5\": \"12345\",\r\n    \"nickname\": \"r1\",\r\n    \"role\": \"jugador\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v3/update_user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"update_user"
+							]
+						},
+						"description": "creates a user"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "event",
+			"item": [
+				{
+					"name": "GET /event",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v3/event",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"event"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n  \"category\": \"85436ed2-4a35-11ed-bbc3-00155d311865\",\r\n \"event_end\": \"2024-08-01 08:\", \r\n \"event_start\": \"2024-08-01 08:50\", \r\n \"local_player\": \"27e6304a-4a34-11ed-9bd9-00155d311865\", \r\n \"visitor_player\": \"d8dcd706-4a33-11ed-944d-00155d311865\" ,\r\n \"stats_link\": \"https://s5.sir.sportradar.com/intralotchile/es/1/season/90425/h2h/6092/706/match/31672715\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v3/event",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"event"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/update_event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"id\": \"bdde323e-4a46-11ed-95aa-00155d311865\",\r\n  \"category\": \"85436ed2-4a35-11ed-bbc3-00155d311865\",\r\n \"event_end\": \"2020-08-01 08:50\", \r\n \"event_start\": \"2020-08-01 08:50\", \r\n \"local_player\": \"27e6304a-4a34-11ed-9bd9-00155d311865\", \r\n \"visitor_player\": \"f0da6dd6-4a34-11ed-98f9-00155d311865\" ,\r\n \"stats_link\":\"https://s5.sir.sportradar.com/intralotchile/es/1/season/90425/h2h/6092/706/match/31672715\",\r\n \"goals\": 1,\r\n \"result\": \"l\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v3/update_event",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"update_event"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "event_player",
+			"item": [
+				{
+					"name": "/event_player",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v3/event_player",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"event_player"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /event_player",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\":\"Union la Calera\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v3/event_player",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"event_player"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/update_event_player",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"id\":\"f0da6dd6-4a34-11ed-98f9-00155d311865\",\"name\":\"Cobresal\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v3/update_event_player",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"update_event_player"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "event_category",
+			"item": [
+				{
+					"name": "POST /event_category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"la liga españa\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v3/event_category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"event_category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/update_event_category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"id\":\"eca8fdbc-4a35-11ed-b8b2-00155d311865\",\"name\":\"Primera Division Argentina\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v3/update_event_category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"update_event_category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /event_category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v3/event_category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"event_category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET /event_category/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v3/event_category/eca8fdbc-4a35-11ed-b8b2-00155d311865",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"event_category",
+								"eca8fdbc-4a35-11ed-b8b2-00155d311865"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "bet",
+			"item": [
+				{
+					"name": "GET /bet",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v3/bet",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"bet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /bet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"goals\": \"5\",\r\n    \"result\": \"e\",\r\n    \"user_id\": \"f31df306-4976-11ed-ba0b-00155d53531e\",\r\n    \"event_id\": \"a9989b96-4a6b-11ed-a3a6-00155d311865\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v3/bet",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"bet"
+							]
+						},
+						"description": "creates a user"
+					},
+					"response": []
+				},
+				{
+					"name": "GET /bet/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v3/bet/54ed571c-4a52-11ed-aa39-00155d311865",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"bet",
+								"54ed571c-4a52-11ed-aa39-00155d311865"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/update_bet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"goals\": \"5\",\r\n    \"result\": \"v\",\r\n    \"user_id\": \"0c099c4c-457d-11ed-9149-00155d233203\",\r\n    \"event_id\": \"bdde323e-4a46-11ed-95aa-00155d311865\",\r\n    \"id\": \"f860dabe-4a56-11ed-8fa5-00155d311865\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v3/update_bet",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"update_bet"
+							]
+						},
+						"description": "creates a user"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ranking",
+			"item": [
+				{
+					"name": "GET /ranking",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v3/ranking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"ranking"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
