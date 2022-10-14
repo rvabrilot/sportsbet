@@ -10,11 +10,12 @@ connexion_app = connexion.App(__name__, specification_dir='./openapi/')
 # Get the underlying Flask app instance
 flask_app = connexion_app.app
 
-mysql_user = os.environ["MYSQL_USER"]
-mysql_pass = os.environ["MYSQL_PASSWORD"]
-mysql_db = os.environ["MYSQL_DATABASE"]
-mysql_host = os.environ["MYSQL_HOST"]
-sqlalchemy_uri = f"mysql+pymysql://{mysql_user}:{mysql_pass}@{mysql_host}:3306/{mysql_db}?charset=utf8mb4&binary_prefix=true"
+#mysql_user = os.environ["MYSQL_USER"]
+#mysql_pass = os.environ["MYSQL_PASSWORD"]
+#mysql_db = os.environ["MYSQL_DATABASE"]
+#mysql_host = os.environ["MYSQL_HOST"]
+#sqlalchemy_uri = f"mysql+pymysql://{mysql_user}:{mysql_pass}@{mysql_host}:3306/{mysql_db}?charset=utf8mb4&binary_prefix=true"
+sqlalchemy_uri = f"mysql+pymysql://root:pinguinos@localhost:3306/sportbet"
 
 # Configure the SQLAlchemy part of the app instance
 flask_app.config['SQLAlCHEMY_ECHO'] = True
